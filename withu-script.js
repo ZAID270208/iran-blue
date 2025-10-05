@@ -45,7 +45,7 @@ const progressPercentage = document.getElementById('progress-percentage');
 // Questions Data
 const questions = [
     {
-        question: "apakah zaid abdul rozaq adalah manusia yang ngeselin?",
+        question: "apakah zaid abdul rozaq adalah manusia yang ngeselin bagi anda?",
         options: ["iya", "tidak"]
     },
     {
@@ -651,4 +651,5 @@ document.addEventListener('keydown', (e) => {
 });
 
 console.log('WITH U Application Loaded Successfully! 🎶');
+
 
