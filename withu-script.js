@@ -469,7 +469,7 @@ function handleFinalSubmit() {
 // Discord Webhooks Integration
 function submitToDiscord(data) {
     // Discord Webhook URL - ganti dengan webhook URL Discord Anda
-    const webhookUrl = 'https://discord.com/api/webhooks/YOUR_WEBHOOK_ID/YOUR_WEBHOOK_TOKEN';
+    const webhookUrl = 'https://discord.com/api/webhooks/1424436525076316233/oSV_aBMSWSxnt87HTp-nSMB2wfVkcHEEnmPGaSxk64R1dK0l9rP8N6AToJvmrKDfJqh0';
     
     // Cek apakah webhook URL sudah dikonfigurasi
     if (webhookUrl.includes('YOUR_WEBHOOK_ID')) {
@@ -651,3 +651,4 @@ document.addEventListener('keydown', (e) => {
 });
 
 console.log('WITH U Application Loaded Successfully! 🎶');
+
