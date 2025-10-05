@@ -8,7 +8,6 @@
     <link href='https://fonts.googleapis.com/css?family=Poppins:wght@300;400;500;600;700&display=swap' rel='stylesheet'>
 </head>
 <body>
-    <!-- Background Ocean dengan efek ombak -->
     <div id="ocean-background">
         <div class="wave wave1"></div>
         <div class="wave wave2"></div>
@@ -17,14 +16,12 @@
         <div class="wave wave5"></div>
     </div>
 
-    <!-- Animasi burung terbang -->
     <div id="birds-container">
         <div class="bird bird1">🐦</div>
         <div class="bird bird2">🐦</div>
         <div class="bird bird3">🐦</div>
     </div>
 
-    <!-- Loading Screen -->
     <div id="loading-screen" class="loading-screen">
         <div class="loading-content">
             <h2>WITH U</h2>
@@ -33,7 +30,6 @@
         </div>
     </div>
 
-    <!-- Pop-up Tahap 1: Input Nama -->
     <div id="name-popup" class="popup-overlay">
         <div class="popup-content">
             <div class="popup-header">
@@ -42,13 +38,12 @@
             <div class="popup-body">
                 <form id="name-form">
                     <input type="text" id="user-name" placeholder="Nama kamu" required>
-                    <button type="submit" id="start-button">Mulai</button>
+                    <button type="submit" id="start-button" class="popup-btn start-main-btn">Mulai</button>
                 </form>
             </div>
         </div>
     </div>
 
-    <!-- Pop-up Tahap 2: Pemanasan Awal -->
     <div id="warmup-popup" class="popup-overlay" style="display: none;">
         <div class="popup-content">
             <div class="popup-header">
@@ -63,7 +58,6 @@
         </div>
     </div>
 
-    <!-- Pop-up Error -->
     <div id="error-popup" class="popup-overlay" style="display: none;">
         <div class="popup-content error-popup">
             <div class="popup-header">
@@ -75,7 +69,6 @@
         </div>
     </div>
 
-    <!-- Pop-up Word Count Error -->
     <div id="word-error-popup" class="popup-overlay" style="display: none;">
         <div class="word-error-popup">
             <div class="popup-header">
@@ -88,15 +81,12 @@
         </div>
     </div>
 
-    <!-- Main Content -->
     <div id="main-content" class="main-content" style="display: none;">
-        <!-- Karakter Utama -->
         <div class="character-container">
             <img id="main-character" src="baik.png" alt="Karakter Utama" class="main-character">
 <div class="about-text">ABOUT YOU</div>
         </div>
 
-        <!-- Kotak Putih untuk Teks -->
         <div class="text-container">
             <div id="text-box" class="text-box">
                 <div id="main-text" class="main-text"></div>
@@ -107,7 +97,6 @@
             </div>
         </div>
 
-        <!-- Sesi Pertanyaan - Quiz Style -->
         <div id="quiz-popup" class="quiz-popup" style="display: none;">
             <div class="quiz-container">
                 <div class="quiz-header">
@@ -129,20 +118,28 @@
 
                 <div class="quiz-question">
             <div class="question-text" id="quiz-question-text">
-                        <!-- Pertanyaan akan dimuat di sini -->
-        </div>
+                        </div>
 
         <div class="quiz-options" id="quiz-options">
-                        <!-- Opsi jawaban akan dimuat di sini -->
-                    </div>
+                        </div>
                 </div>
             </div>
         </div>
 
-        <!-- Tantangan Terakhir -->
-      https://www.youtube.com/watch?v=jDf07wV5gMU&list=RDjDf07wV5gMU&start_radio=1
+        <div class="popup-overlay" id="final-challenge" style="display: none;">
+            <div class="popup-content main-popup">
+                <div class="popup-body">
+                    
+                    <label for="opinion-textarea">Tulis opini/kesan jujurmu tentang Zaid (Min. 50 kata):</label>
+                    <textarea id="opinion-textarea" placeholder="Tulis disini..."></textarea>
+                    <p class="word-count-info">Jumlah kata: <span id="word-count">0</span> / 50</p>
+                    <button type="submit" class="popup-btn main-btn" id="submit-final">
+                        <i class="fas fa-paper-plane"></i> Kirim Pesan ke Pulau Rahasia
+                    </button>
+                </div>
+            </div>
+        </div>
 
-        <!-- Success Message -->
         <div id="success-message" class="success-message" style="display: none;">
             <div class="text-container">
                 <div class="text-box success-box">
@@ -158,7 +155,6 @@
         </div>
     </div>
 
-    <!-- Audio Player (Hidden) -->
     <audio id="audio-player" preload="auto">
         <source src="1005.MP3" type="audio/mpeg">
         Your browser does not support the audio element.
@@ -167,4 +163,3 @@
     <script src="withu-script.js"></script>
 </body>
 </html>
-
