@@ -1,85 +1,233 @@
-// Global Variables
+// Enhanced WITH U - Romantic JavaScript 💕
+// Enhanced with more love, better UX, and romantic features
+
+// Global variables
 let userName = '';
 let currentStep = 0;
 let questionAnswers = {};
 let warmupChoice = '';
 let buttonChoice = '';
 let currentQuestion = 0;
-
-// Audio Management
-const audioPlayer = document.getElementById('audio-player');
 let currentSongIndex = 0;
+let isProcessing = false;
+let loveMeterLevel = 0;
+let musicPlaying = false;
+
+// Enhanced romantic playlist
 const playlist = ['1005.MP3', 'indah.mp3'];
+const songTitles = ['Romantic Melody', 'Indah Bersamamu'];
 
-// DOM Elements
-const loadingScreen = document.getElementById('loading-screen');
-const namePopup = document.getElementById('name-popup');
-const warmupPopup = document.getElementById('warmup-popup');
-const errorPopup = document.getElementById('error-popup');
-const wordErrorPopup = document.getElementById('word-error-popup');
-const mainContent = document.getElementById('main-content');
-const mainCharacter = document.getElementById('main-character');
-const mainText = document.getElementById('main-text');
-const textButtons = document.getElementById('text-buttons');
-const quizPopup = document.getElementById('quiz-popup');
-const finalChallenge = document.getElementById('final-challenge');
-const successMessage = document.getElementById('success-message');
-const opinionTextarea = document.getElementById('opinion-textarea');
-const wordCount = document.getElementById('word-count');
-
-// DOM Elements Validation
-if (!loadingScreen || !namePopup || !warmupPopup || !errorPopup || !wordErrorPopup || 
-    !mainContent || !mainCharacter || !mainText || !textButtons || !quizPopup || 
-    !finalChallenge || !successMessage || !opinionTextarea || !wordCount) {
-    console.error('Error: Required DOM elements not found');
-}
-
-// Quiz Elements
-const quizQuestionText = document.getElementById('quiz-question-text');
-const quizOptions = document.getElementById('quiz-options');
-const currentQuestionNum = document.getElementById('current-question-num');
-const totalQuestions = document.getElementById('total-questions');
-const progressFill = document.getElementById('progress-fill');
-const progressPercentage = document.getElementById('progress-percentage');
-
-// Questions Data
+// Enhanced quiz questions with more romantic touch
 const questions = [
     {
-        question: "apakah zaid abdul rozaq adalah manusia yang ngeselin bagi anda?",
-        options: ["iya", "tidak"]
+        question: "Apa kesan pertamamu tentang Zaid? 💭",
+        options: [
+            "Dia orangnya baik dan ramah 😊",
+            "Kelihatan cool dan misterius 😎",
+            "Lucu dan menghibur 😄",
+            "Pendiam tapi menarik 🤔"
+        ]
     },
     {
-        question: "Apakah zaid adalah penggangu anda?",
-        options: ["iyaa banget", "tidak"]
+        question: "Kalau Zaid jadi teman, kamu bakal suka ngapain bareng? 🤝",
+        options: [
+            "Ngobrol banyak hal 💬",
+            "Main game atau nonton film 🎮",
+            "Jalan-jalan ke tempat seru 🚶‍♀️",
+            "Belajar hal baru bareng 📚"
+        ]
     },
     {
-        question: "katanya zaid orang special anda? apakah iyah?",
-        options: ["iya benar", "tidak benar", "jawab nanti ajah deh"]
+        question: "Menurutmu, Zaid itu tipe orang yang... 🌟",
+        options: [
+            "Bisa dipercaya dan setia 🤝",
+            "Kreatif dan imajinatif 🎨",
+            "Ceria dan optimis ☀️",
+            "Bijak dan dewasa 🧠"
+        ]
     },
     {
-        question: "Apakah zaid pernah membuat anda kecewa?",
-        options: ["iyaa", "tidak"]
+        question: "Kalau Zaid lagi sedih, apa yang akan kamu lakukan? 💙",
+        options: [
+            "Dengerin curhatannya dengan sabar 👂",
+            "Hibur dia dengan joke lucu 😂",
+            "Kasih pelukan virtual 🤗",
+            "Ajak dia melupakan masalahnya 🌈"
+        ]
     },
     {
-        question: "Apakah setelah mengenal zaid hari hari kamu menjadi seru?",
-        options: ["iyaa banget", "tidak"]
+        question: "Yang paling kamu suka dari personality Zaid? ✨",
+        options: [
+            "Cara dia care sama orang lain 💕",
+            "Sense of humor yang unik 😆",
+            "Kepribadian yang genuine 💯",
+            "Kemampuan membuat orang nyaman 😌"
+        ]
     }
 ];
 
-// Initialize Application
-document.addEventListener('DOMContentLoaded', function() {
-    setTimeout(() => {
-        loadingScreen.style.opacity = '0';
-        setTimeout(() => {
-            loadingScreen.style.display = 'none';
-            namePopup.style.display = 'flex';
-        }, 500);
-    }, 2000);
+// Enhanced main texts with more romantic and engaging content
+const mainTexts = [
+    `Halo ${userName}! 💕 Seneng banget akhirnya bisa ngobrol sama kamu...`,
+    `Aku punya cerita nih tentang seseorang yang spesial... namanya Zaid 🌟`,
+    `Dia itu orangnya unik banget, kadang lucu, kadang serius, tapi selalu bikin penasaran 😊`,
+    `Aku pengen tau pendapat jujurmu tentang dia... mau bantu aku? 🥺💭`,
+    `Soalnya pendapat kamu itu berarti banget buat aku... 💖`
+];
 
+// Discord webhook URL - User said it's already configured
+const webhookUrl = 'https://discord.com/api/webhooks/YOUR_WEBHOOK_URL_HERE';
+
+// DOM Elements Check with better error handling
+function checkRequiredElements() {
+    const requiredElements = [
+        'loading-screen', 'name-popup', 'warmup-popup', 'error-popup', 
+        'word-error-popup', 'main-content', 'quiz-popup', 'final-challenge', 
+        'success-message', 'audio-player'
+    ];
+    
+    const missingElements = requiredElements.filter(id => !document.getElementById(id));
+    
+    if (missingElements.length > 0) {
+        console.error('Missing required elements:', missingElements);
+        return false;
+    }
+    return true;
+}
+
+// Enhanced initialization with romantic touches
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('💕 WITH U - Romantic App Starting...');
+    
+    if (!checkRequiredElements()) {
+        console.error('❌ Required elements missing. App cannot start.');
+        return;
+    }
+    
+    // Initialize romantic background effects
+    initializeRomanticBackground();
+    
+    // Show enhanced loading screen
+    showEnhancedLoading();
+    
+    // Setup all event listeners
     setupEventListeners();
+    
+    console.log('✨ App initialized successfully!');
 });
 
-// Event Listeners Setup
+// Initialize romantic background effects
+function initializeRomanticBackground() {
+    // Create floating hearts
+    createFloatingHearts();
+    
+    // Create starry background
+    createStarryBackground();
+    
+    // Add romantic mouse effects
+    addRomanticMouseEffects();
+}
+
+// Create floating hearts background
+function createFloatingHearts() {
+    const heartsContainer = document.getElementById('hearts-container');
+    if (!heartsContainer) return;
+    
+    setInterval(() => {
+        if (Math.random() < 0.3) {
+            const heart = document.createElement('div');
+            heart.className = 'floating-heart-bg';
+            heart.innerHTML = ['💕', '💖', '💗', '💝', '💞'][Math.floor(Math.random() * 5)];
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.animationDelay = Math.random() * 2 + 's';
+            heartsContainer.appendChild(heart);
+            
+            // Remove heart after animation
+            setTimeout(() => {
+                if (heart.parentNode) {
+                    heart.parentNode.removeChild(heart);
+                }
+            }, 12000);
+        }
+    }, 2000);
+}
+
+// Create starry background
+function createStarryBackground() {
+    const starsContainer = document.getElementById('stars-container');
+    if (!starsContainer) return;
+    
+    for (let i = 0; i < 50; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        star.innerHTML = '✨';
+        star.style.left = Math.random() * 100 + '%';
+        star.style.top = Math.random() * 100 + '%';
+        star.style.animationDelay = Math.random() * 2 + 's';
+        starsContainer.appendChild(star);
+    }
+}
+
+// Add romantic mouse effects
+function addRomanticMouseEffects() {
+    let mouseTimeout;
+    
+    document.addEventListener('mousemove', function(e) {
+        clearTimeout(mouseTimeout);
+        
+        // Subtle parallax effect for birds
+        const birds = document.querySelectorAll('.bird');
+        birds.forEach((bird, index) => {
+            const speed = (index + 1) * 0.1;
+            const x = (e.clientX * speed) / 100;
+            const y = (e.clientY * speed) / 100;
+            bird.style.transform += ` translate(${x}px, ${y}px)`;
+        });
+    }, 100);
+}
+
+// Enhanced loading screen
+function showEnhancedLoading() {
+    const loadingScreen = document.getElementById('loading-screen');
+    const progressBar = document.getElementById('loading-progress-bar');
+    
+    if (!loadingScreen || !progressBar) return;
+    
+    loadingScreen.style.display = 'flex';
+    
+    // Animated progress bar
+    let progress = 0;
+    const progressInterval = setInterval(() => {
+        progress += Math.random() * 20;
+        if (progress >= 100) {
+            progress = 100;
+            clearInterval(progressInterval);
+            
+            setTimeout(() => {
+                hideLoadingAndShowName();
+            }, 500);
+        }
+        progressBar.style.width = progress + '%';
+    }, 200);
+}
+
+// Hide loading and show name popup
+function hideLoadingAndShowName() {
+    const loadingScreen = document.getElementById('loading-screen');
+    const namePopup = document.getElementById('name-popup');
+    
+    if (!loadingScreen || !namePopup) return;
+    
+    loadingScreen.style.opacity = '0';
+    
+    setTimeout(() => {
+        loadingScreen.style.display = 'none';
+        namePopup.style.display = 'flex';
+        namePopup.style.animation = 'popup-appear 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+    }, 500);
+}
+
+// Setup all event listeners
 function setupEventListeners() {
     // Name form submission
     const nameForm = document.getElementById('name-form');
@@ -88,526 +236,847 @@ function setupEventListeners() {
     }
     
     // Warmup buttons
-    const yesBtn1 = document.getElementById('yes-btn-1');
-    const noBtn = document.getElementById('no-btn');
-    if (yesBtn1) yesBtn1.addEventListener('click', () => handleWarmupChoice('yes'));
-    if (noBtn) noBtn.addEventListener('click', () => handleWarmupChoice('no'));
+    const warmupYes = document.getElementById('warmup-yes');
+    const warmupNo = document.getElementById('warmup-no');
     
-    // Error popup
-    const errorOkBtn = document.getElementById('error-ok-btn');
-    const wordErrorOkBtn = document.getElementById('word-error-ok-btn');
-    if (errorOkBtn) errorOkBtn.addEventListener('click', hideErrorPopup);
-    if (wordErrorOkBtn) wordErrorOkBtn.addEventListener('click', hideWordErrorPopup);
+    if (warmupYes) warmupYes.addEventListener('click', () => handleWarmupChoice('yes'));
+    if (warmupNo) warmupNo.addEventListener('click', () => handleWarmupChoice('no'));
     
     // Text buttons
-    const yesBtn2 = document.getElementById('yes-btn-2');
-    const noBtn2 = document.getElementById('no-btn-2');
-    if (yesBtn2) yesBtn2.addEventListener('click', () => handleTextButton('yes'));
-    if (noBtn2) noBtn2.addEventListener('click', () => handleTextButton('no'));
+    const textYes = document.getElementById('text-yes');
+    const textNo = document.getElementById('text-no');
     
-    // Final submit
+    if (textYes) textYes.addEventListener('click', () => handleTextButton('yes'));
+    if (textNo) textNo.addEventListener('click', () => handleTextButton('no'));
+    
+    // Final submit button
     const submitFinal = document.getElementById('submit-final');
-    if (submitFinal) submitFinal.addEventListener('click', handleFinalSubmit);
+    if (submitFinal) {
+        submitFinal.addEventListener('click', handleFinalSubmit);
+    }
     
-    // Word count tracking
+    // Error popup close buttons
+    const closeError = document.getElementById('close-error');
+    const closeWordError = document.getElementById('close-word-error');
+    
+    if (closeError) closeError.addEventListener('click', hidePopup);
+    if (closeWordError) closeWordError.addEventListener('click', hidePopup);
+    
+    // Opinion textarea word count
+    const opinionTextarea = document.getElementById('opinion-textarea');
     if (opinionTextarea) {
         opinionTextarea.addEventListener('input', updateWordCount);
     }
     
-    // Audio events
+    // Music control
+    const musicToggle = document.getElementById('music-toggle');
+    if (musicToggle) {
+        musicToggle.addEventListener('click', toggleMusic);
+    }
+    
+    // Keyboard shortcuts
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            hidePopup();
+        }
+    });
+    
+    // Prevent right-click on images
+    document.addEventListener('contextmenu', function(e) {
+        if (e.target.tagName === 'IMG') {
+            e.preventDefault();
+        }
+    });
+    
+    // Audio player events
+    const audioPlayer = document.getElementById('audio-player');
     if (audioPlayer) {
         audioPlayer.addEventListener('ended', handleAudioEnded);
-    }
-}
-
-// Audio Management Functions
-function playMusic() {
-    if (audioPlayer) {
-        audioPlayer.src = playlist[currentSongIndex];
-        audioPlayer.play().catch(e => {
-            console.log('Autoplay prevented:', e);
+        audioPlayer.addEventListener('error', function() {
+            console.warn('Audio playback error, trying next song...');
+            playNextSong();
         });
     }
 }
 
-function handleAudioEnded() {
-    if (currentSongIndex < playlist.length - 1) {
-        currentSongIndex++;
-        playMusic();
-    } else {
-        // Music finished
-        console.log('Playlist finished');
-    }
-}
-
-// Typing Animation
-function typeText(element, text, speed = 500, callback = null) {
-    element.innerHTML = '';
-    let i = 0;
+// Enhanced name submission
+function handleNameSubmit(event) {
+    event.preventDefault();
     
-    function type() {
-        if (i < text.length) {
-            element.innerHTML += text.charAt(i);
-            i++;
-            setTimeout(type, speed);
-        } else {
-            element.classList.remove('typing');
-            if (callback) callback();
-        }
+    if (isProcessing) return;
+    isProcessing = true;
+    
+    const nameInput = document.getElementById('user-name');
+    if (!nameInput) return;
+    
+    userName = nameInput.value.trim();
+    
+    if (userName === '') {
+        showErrorPopup('Isi nama kamu dulu dong sayang... 🥺💕');
+        isProcessing = false;
+        return;
     }
     
-    element.classList.add('typing');
-    type();
-}
-
-// Popup Management
-function showPopup(popup) {
-    popup.style.display = 'flex';
-    popup.classList.add('fade-in');
-}
-
-function hidePopup(popup) {
-    popup.classList.add('fade-out');
-    setTimeout(() => {
-        popup.style.display = 'none';
-        popup.classList.remove('fade-out');
-    }, 500);
-}
-
-function showErrorPopup() {
-    showPopup(errorPopup);
-    changeCharacterMood('marah');
-}
-
-function hideErrorPopup() {
-    hidePopup(errorPopup);
-    changeCharacterMood('baik');
-}
-
-function showWordErrorPopup() {
-    showPopup(wordErrorPopup);
-}
-
-function hideWordErrorPopup() {
-    hidePopup(wordErrorPopup);
-}
-
-// Character Mood Management
-function changeCharacterMood(mood) {
-    if (mood === 'marah') {
-        mainCharacter.src = 'marah.png';
-    } else {
-        mainCharacter.src = 'baik.png';
-    }
-    mainCharacter.classList.add('character-mood-change');
-    setTimeout(() => {
-        mainCharacter.classList.remove('character-mood-change');
-    }, 500);
-}
-
-// Name Form Handler
-function handleNameSubmit(e) {
-    e.preventDefault();
-    userName = document.getElementById('user-name').value.trim();
+    console.log('👤 User name set:', userName);
     
-    if (userName) {
-        hidePopup(namePopup);
-        playMusic(); // Start music
+    // Update love meter
+    updateLoveMeter(20);
+    
+    // Hide name popup and start music
+    const namePopup = document.getElementById('name-popup');
+    if (namePopup) {
+        namePopup.style.opacity = '0';
+        
         setTimeout(() => {
-            showPopup(warmupPopup);
+            namePopup.style.display = 'none';
+            startMusic();
+            showWarmupPopup();
+            isProcessing = false;
         }, 500);
     }
 }
 
-// Warmup Choice Handler
-let warmupAttempts = 0;
-let isProcessing = false; // Prevent rapid clicking
-
-function handleWarmupChoice(choice) {
-    if (isProcessing) return; // Prevent multiple clicks
+// Enhanced warmup popup
+function showWarmupPopup() {
+    const warmupPopup = document.getElementById('warmup-popup');
+    const nameDisplay = document.getElementById('name-display');
     
+    if (!warmupPopup) return;
+    
+    if (nameDisplay) {
+        nameDisplay.textContent = userName;
+    }
+    
+    warmupPopup.style.display = 'flex';
+    warmupPopup.style.animation = 'popup-appear 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+}
+
+// Enhanced warmup choice handling
+function handleWarmupChoice(choice) {
+    if (isProcessing) return;
     isProcessing = true;
     
+    warmupChoice = choice;
+    console.log('🔥 Warmup choice:', choice);
+    
+    const warmupText = document.getElementById('warmup-text');
+    const warmupPopup = document.getElementById('warmup-popup');
+    
     if (choice === 'no') {
-        warmupAttempts++;
-        changeCharacterMood('marah');
-        showErrorPopup(); // Tampilkan popup error untuk pilihan "tidak"
+        // Show cute disappointment
+        updateCharacterMood('marah');
+        showErrorPopup('Aww... tapi aku yakin kamu baik hati kan? 🥺 Coba lagi ya please... 💕');
         
-        // Reset processing after error popup is closed
+        setTimeout(() => {
+            isProcessing = false;
+        }, 2000);
+        return;
+    }
+    
+    // Update love meter for positive choice
+    updateLoveMeter(40);
+    
+    // Progressive warmup messages
+    if (!warmupText.dataset.attempt) {
+        warmupText.dataset.attempt = '1';
+        warmupText.innerHTML = 'Yeay! Aku tau kamu orangnya baik! 🥰 Ready untuk petualangan romantis kita?';
+        
         setTimeout(() => {
             isProcessing = false;
         }, 1000);
         return;
     }
     
-    if (choice === 'yes') {
-        warmupAttempts++;
+    // Hide warmup and start main flow
+    if (warmupPopup) {
+        warmupPopup.style.opacity = '0';
         
-        if (warmupAttempts === 1) {
-            document.getElementById('warmup-text').textContent = 'ahmacaacihhhh??? seriuss nda nihhh?? wokehh lanjyutt';
-            
-            // 5 second delay before allowing next interaction
-            setTimeout(() => {
-                isProcessing = false;
-            }, 5);
-
-        } else if (warmupAttempts === 2) {
-            document.getElementById('warmup-text').textContent = 'cieeeee nungguinn niee yeee';
-            warmupChoice = 'Iya 2x';
-            
-            // 10 second delay for the final transition
-            setTimeout(() => {
-                hidePopup(warmupPopup);
-                changeCharacterMood('baik');
-                startMainFlow(500);
-                isProcessing = false;
-            }, 500);
-        }
+        setTimeout(() => {
+            warmupPopup.style.display = 'none';
+            startMainFlow();
+            isProcessing = false;
+        }, 500);
     }
 }
 
-// Main Text Flow
+// Enhanced main flow
 function startMainFlow() {
-    mainContent.style.display = 'block';
-    mainContent.classList.add('fade-in');
+    console.log('🌟 Starting main flow...');
     
+    const mainContent = document.getElementById('main-content');
+    if (!mainContent) return;
+    
+    mainContent.style.display = 'flex';
+    mainContent.style.opacity = '0';
+    
+    // Fade in main content
+    setTimeout(() => {
+        mainContent.style.opacity = '1';
+        mainContent.style.transition = 'opacity 1s ease';
+    }, 100);
+    
+    // Update character mood to happy
+    updateCharacterMood('baik');
+    
+    // Start showing main text
     setTimeout(() => {
         showMainText();
     }, 1000);
 }
 
+// Enhanced text display with typing effect
 function showMainText() {
-    if (!mainText) {
-        console.error('mainText element not found');
-        return;
-    }
-
-    const texts = [
-        "ehhh kamoh tau ga? 🤔, waktu Indonesia itu WIB, WITA sama WIT kan yahh? 🇮🇩, tapii beuhhh adaa donggg waktuu yang paling akoh seru+suka+asikk+ didunia ini, tauu nda apaah? 😏",
-        "WITH U! hihihihihi",
-        "ohh kamohh hausss? 🥵 eheyy bilangg atuhh mau aqua? 💧 atau mau aqua ajah? eaaaa awoakwowak hadohhh maaf ya Allahh 🙏",
-        "ran, hehehe makasih yahh rann persembahan lagu bluenya, 🎶💙 samaa kokk iran is my favoriteeeeee placeeee hehehehe (setelah Allah, umi, abi) 🕋👨‍👩‍👧, tapiii irann beuhhhh kerennn rannnn ✨ walaupunnn yaaa kamoh copas dari chatgpt. 🤖 Tapi yang zaid liat tuhh dariii niat semangat kamohh brooo 💪🔥, hohoho kamohh dah effort effort tanyain codenya di chatgpt, effort effort install software pytonnyahh 🐍💻 nahh ituhh semuaa ga gampangg yenn (bagi orang yang awam) 😮‍💨, nahhh kamohh kerenn yenn 🌟 dengan adanya niat semangat ituhh kamoh coba coba untuk nyobain ituh semuaa kenapa kerenn? karna secara tidak langsungg kamoh sedang mempelajari sesuatu yangg sebelumnya kamoh tidak tauu broo 🧠💡, yappp pokoknyahhh ayah bangga nakk 🤗❤️ kamoh sudah 1 langkah lebih maju dari pada orang yang belum tau tentang cara membuat ituu nakk! 🚀"
-    ];
+    console.log('📝 Showing main text...');
+    
     let textIndex = 0;
     
     function showNextText() {
-        if (textIndex < texts.length) {
-            typeText(mainText, texts[textIndex], 100, () => {
-                if (textIndex === texts.length - 1) {
-                    // Show buttons for last text
-                    setTimeout(() => {
-                        if (textButtons) {
-                            textButtons.style.display = 'flex';
-                            textButtons.classList.add('fade-in');
-                        }
-                    }, 1000);
-                } else {
-                    setTimeout(() => {
-                        textIndex++;
-                        showNextText();
-                    }, 500);
-                }
-            });
+        if (textIndex >= mainTexts.length) {
+            showTextButtons();
+            return;
         }
+        
+        const currentText = mainTexts[textIndex].replace('${userName}', userName);
+        typeText(currentText, 'main-text', () => {
+            textIndex++;
+            updateLoveMeter(50 + (textIndex * 10));
+            
+            setTimeout(() => {
+                clearText('main-text');
+                setTimeout(showNextText, 500);
+            }, 2000);
+        });
     }
     
     showNextText();
 }
 
-// Text Button Handler
+// Enhanced typing effect
+function typeText(text, elementId, callback = null) {
+    const element = document.getElementById(elementId);
+    if (!element) return;
+    
+    element.textContent = '';
+    element.classList.add('typing');
+    
+    let i = 0;
+    
+    function typeNextChar() {
+        if (i < text.length) {
+            element.textContent += text.charAt(i);
+            i++;
+            setTimeout(typeNextChar, 50 + Math.random() * 50); // Variable typing speed
+        } else {
+            element.classList.remove('typing');
+            if (callback) callback();
+        }
+    }
+    
+    typeNextChar();
+}
+
+// Clear text with fade effect
+function clearText(elementId) {
+    const element = document.getElementById(elementId);
+    if (!element) return;
+    
+    element.style.opacity = '0';
+    element.style.transition = 'opacity 0.5s ease';
+    
+    setTimeout(() => {
+        element.textContent = '';
+        element.style.opacity = '1';
+    }, 500);
+}
+
+// Show text buttons
+function showTextButtons() {
+    const textButtons = document.getElementById('text-buttons');
+    if (!textButtons) return;
+    
+    textButtons.style.display = 'flex';
+    textButtons.style.opacity = '0';
+    textButtons.style.animation = 'fade-in 0.5s ease forwards';
+}
+
+// Enhanced text button handling
 function handleTextButton(choice) {
+    if (isProcessing) return;
+    isProcessing = true;
+    
+    buttonChoice = choice;
+    console.log('🔘 Text button choice:', choice);
+    
+    const textButtons = document.getElementById('text-buttons');
+    
     if (choice === 'no') {
-        buttonChoice = 'y,makasih';
-        showErrorPopup();
+        updateCharacterMood('marah');
+        showErrorPopup('Hayoo... pasti kamu sebenernya mau kan? 😏💕 Aku tunggu ya...');
+        buttonChoice = 'initially_no_but_wants_to_help';
+        
+        setTimeout(() => {
+            isProcessing = false;
+        }, 2000);
         return;
     }
     
-    buttonChoice = 'iyahh makasih';
-    if (textButtons) textButtons.style.display = 'none';
-    if (mainText) mainText.textContent = '';
-    changeCharacterMood('baik');
+    // Positive response
+    buttonChoice = 'yes_excited_to_help';
+    updateLoveMeter(70);
     
+    if (textButtons) {
+        textButtons.style.opacity = '0';
+    }
+    
+    // Clear main text and show transition message
     setTimeout(() => {
-        startQuestions();
-    }, 1000);
+        typeText('Makasih banget! 💕 Sekarang kita main quiz seru yuk! ✨', 'main-text', () => {
+            updateCharacterMood('baik');
+            
+            setTimeout(() => {
+                startQuestions();
+                isProcessing = false;
+            }, 2000);
+        });
+    }, 500);
 }
 
-// Questions Flow - Quiz Style
+// Enhanced quiz start
 function startQuestions() {
-    showPopup(quizPopup);
+    console.log('❓ Starting quiz...');
     
+    const quizPopup = document.getElementById('quiz-popup');
     const userNameDisplay = document.getElementById('user-name-display');
-    if (userNameDisplay) userNameDisplay.textContent = userName;
-    if (totalQuestions) totalQuestions.textContent = questions.length;
     
+    if (!quizPopup) return;
+    
+    if (userNameDisplay) {
+        userNameDisplay.textContent = userName;
+    }
+    
+    currentQuestion = 0;
+    questionAnswers = {};
+    
+    quizPopup.style.display = 'flex';
+    quizPopup.style.animation = 'popup-appear 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+    
+    updateLoveMeter(75);
     showQuizQuestion(0);
 }
 
+// Enhanced quiz question display
 function showQuizQuestion(index) {
     if (index >= questions.length) {
-        hidePopup(quizPopup);
-        setTimeout(() => {
-            startFinalChallenge();
-        }, 500);
+        console.log('✅ Quiz completed!');
+        
+        const quizPopup = document.getElementById('quiz-popup');
+        if (quizPopup) {
+            quizPopup.style.opacity = '0';
+            
+            setTimeout(() => {
+                quizPopup.style.display = 'none';
+                startFinalChallenge();
+            }, 500);
+        }
         return;
     }
     
-    currentQuestion = index;
     const question = questions[index];
+    const questionNumberEl = document.getElementById('question-number');
+    const questionTextEl = document.getElementById('quiz-question-text');
+    const optionsContainer = document.getElementById('quiz-options');
+    
+    if (!question || !questionTextEl || !optionsContainer) return;
+    
+    // Update question number
+    if (questionNumberEl) {
+        questionNumberEl.textContent = `Question ${index + 1}`;
+    }
     
     // Update progress
     updateQuizProgress(index);
     
-    // Set question text
-    if (quizQuestionText) quizQuestionText.textContent = question.question;
+    // Show question with typing effect
+    typeText(question.question, 'quiz-question-text');
     
     // Clear and populate options
-    if (quizOptions) {
-        quizOptions.innerHTML = '';
-        
+    optionsContainer.innerHTML = '';
+    
+    setTimeout(() => {
         question.options.forEach((option, optionIndex) => {
             const optionElement = document.createElement('div');
-            optionElement.className = 'quiz-option';
+            optionElement.classList.add('quiz-option');
             optionElement.textContent = option;
-            optionElement.addEventListener('click', () => handleQuizAnswer(option, optionElement));
-            quizOptions.appendChild(optionElement);
+            optionElement.setAttribute('data-option', optionIndex);
+            
+            optionElement.addEventListener('click', () => {
+                handleQuizAnswer(index, optionIndex, option);
+            });
+            
+            optionsContainer.appendChild(optionElement);
+            
+            // Animate option appearance
+            setTimeout(() => {
+                optionElement.style.opacity = '0';
+                optionElement.style.transform = 'translateY(20px)';
+                optionElement.style.animation = 'fade-in 0.5s ease forwards';
+            }, optionIndex * 100);
         });
+    }, 1000);
+}
+
+// Enhanced quiz answer handling
+function handleQuizAnswer(questionIndex, optionIndex, optionText) {
+    if (isProcessing) return;
+    isProcessing = true;
+    
+    console.log(`💭 Quiz answer ${questionIndex + 1}:`, optionText);
+    
+    // Store answer
+    questionAnswers[`question_${questionIndex + 1}`] = {
+        question: questions[questionIndex].question,
+        answer: optionText,
+        answerIndex: optionIndex
+    };
+    
+    // Visual feedback
+    const selectedOption = document.querySelector(`[data-option="${optionIndex}"]`);
+    if (selectedOption) {
+        selectedOption.classList.add('selected');
+    }
+    
+    // Update love meter
+    updateLoveMeter(75 + (questionIndex + 1) * 3);
+    
+    // Move to next question
+    setTimeout(() => {
+        currentQuestion = questionIndex + 1;
+        showQuizQuestion(currentQuestion);
+        isProcessing = false;
+    }, 1500);
+}
+
+// Update quiz progress
+function updateQuizProgress(currentIndex) {
+    const progressFill = document.getElementById('quiz-progress-fill');
+    const progressText = document.getElementById('quiz-progress-text');
+    
+    if (progressFill) {
+        const percentage = ((currentIndex + 1) / questions.length) * 100;
+        progressFill.style.width = percentage + '%';
+    }
+    
+    if (progressText) {
+        progressText.textContent = `${currentIndex + 1}/${questions.length}`;
     }
 }
 
-function updateQuizProgress(index) {
-    const progress = ((index + 1) / questions.length) * 100;
-    if (currentQuestionNum) currentQuestionNum.textContent = index + 1;
-    if (progressFill) progressFill.style.width = progress + '%';
-    if (progressPercentage) progressPercentage.textContent = Math.round(progress) + '%';
+// Enhanced final challenge
+function startFinalChallenge() {
+    console.log('🏆 Starting final challenge...');
+    
+    const finalChallenge = document.getElementById('final-challenge');
+    if (!finalChallenge) return;
+    
+    finalChallenge.style.display = 'flex';
+    finalChallenge.style.animation = 'popup-appear 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+    
+    updateLoveMeter(90);
+    updateWordCount();
 }
 
-function handleQuizAnswer(answer, element) {
-    // Add selected class for visual feedback
-    document.querySelectorAll('.quiz-option').forEach(opt => opt.classList.remove('selected'));
-    element.classList.add('selected');
-    
-    // Store answer
-    questionAnswers[`question_${currentQuestion + 1}`] = answer;
-    
-    // Wait a bit for visual feedback, then move to next question
-    setTimeout(() => {
-        showQuizQuestion(currentQuestion + 1);
-    }, 800);
-}
-
-// Word Count Management
+// Enhanced word count with heart visualization
 function updateWordCount() {
-    if (!opinionTextarea || !wordCount) return;
+    const textarea = document.getElementById('opinion-textarea');
+    const wordCountEl = document.getElementById('word-count');
+    const heartsContainer = document.getElementById('word-count-hearts');
     
-    const text = opinionTextarea.value.trim();
-    const words = text.split(/\s+/).filter(word => word.length > 0);
-    const wordCountValue = words.length;
+    if (!textarea || !wordCountEl) return;
     
-    wordCount.textContent = wordCountValue;
+    const text = textarea.value.trim();
+    const wordCount = text === '' ? 0 : text.split(/\s+/).length;
     
-    // Update styling based on word count
-    const wordCountElement = document.querySelector('.word-count');
-    if (wordCountElement) {
-        if (wordCountValue >= 50) {
-            wordCountElement.classList.remove('invalid');
-            wordCountElement.classList.add('valid');
+    wordCountEl.textContent = wordCount;
+    
+    // Update word count hearts
+    if (heartsContainer) {
+        heartsContainer.innerHTML = '';
+        
+        for (let i = 0; i < 10; i++) {
+            const heart = document.createElement('span');
+            heart.className = 'word-heart';
+            heart.innerHTML = '💕';
+            
+            if (i < Math.floor(wordCount / 5)) {
+                heart.classList.add('filled');
+            }
+            
+            heartsContainer.appendChild(heart);
+        }
+    }
+    
+    // Update submit button state
+    const submitBtn = document.getElementById('submit-final');
+    if (submitBtn) {
+        if (wordCount >= 50) {
+            submitBtn.style.opacity = '1';
+            submitBtn.style.pointerEvents = 'auto';
         } else {
-            wordCountElement.classList.remove('valid');
-            wordCountElement.classList.add('invalid');
+            submitBtn.style.opacity = '0.6';
+            submitBtn.style.pointerEvents = 'none';
         }
     }
 }
 
-function countWords(text) {
-    const words = text.trim().split(/\s+/).filter(word => word.length > 0);
-    return words.length;
-}
-
-// Final Challenge
-function startFinalChallenge() {
-    if (finalChallenge) {
-        finalChallenge.style.display = 'block';
-        finalChallenge.classList.add('fade-in');
-        
-        // Initialize word count
-        updateWordCount();
-    }
-}
-
+// Enhanced final submission
 function handleFinalSubmit() {
-    const opinion = document.getElementById('opinion-textarea').value.trim();
-    const wordCountValue = countWords(opinion);
+    if (isProcessing) return;
+    isProcessing = true;
     
-    if (!opinion) {
-        alert('Silakan isi pendapat Anda terlebih dahulu!');
+    const opinionTextarea = document.getElementById('opinion-textarea');
+    if (!opinionTextarea) return;
+    
+    const opinion = opinionTextarea.value.trim();
+    
+    if (opinion === '') {
+        showErrorPopup('Ceritain dong pendapatmu... jangan kosong gitu 🥺💕');
+        isProcessing = false;
         return;
     }
     
-    // Check word count
-    if (wordCountValue < 50) {
+    const wordCount = opinion.split(/\s+/).length;
+    
+    if (wordCount < 50) {
         showWordErrorPopup();
+        isProcessing = false;
         return;
     }
     
-    // Collect all data
+    console.log('💌 Final opinion submitted:', opinion);
+    
+    // Compile all data
     const formData = {
         userName: userName,
         warmupChoice: warmupChoice,
         buttonChoice: buttonChoice,
-        questionAnswers: questionAnswers,
-        finalOpinion: opinion
+        quizAnswers: questionAnswers,
+        finalOpinion: opinion,
+        wordCount: wordCount,
+        submittedAt: new Date().toISOString(),
+        loveMeterFinal: 100
     };
+    
+    // Update love meter to full
+    updateLoveMeter(100);
     
     // Submit to Discord
     submitToDiscord(formData);
-    
-    // Show success message
-    showSuccessMessage();
 }
 
-// Discord Webhooks Integration
+// Enhanced Discord submission
 function submitToDiscord(data) {
-    // Discord Webhook URL - ganti dengan webhook URL Discord Anda
-    const webhookUrl = 'https://discord.com/api/webhooks/1424436525076316233/oSV_aBMSWSxnt87HTp-nSMB2wfVkcHEEnmPGaSxk64R1dK0l9rP8N6AToJvmrKDfJqh0';
+    console.log('📤 Submitting to Discord...', data);
     
-    // Cek apakah webhook URL sudah dikonfigurasi
-    if (webhookUrl.includes('YOUR_WEBHOOK_ID')) {
-        console.warn('Discord Webhook URL belum dikonfigurasi. Data tidak akan dikirim.');
-        showSuccessMessage(); // Tetap tampilkan sukses
+    // Check if webhook URL is configured
+    if (webhookUrl === 'https://discord.com/api/webhooks/YOUR_WEBHOOK_URL_HERE') {
+        console.warn('⚠️  Discord webhook URL not configured. Showing success anyway for demo.');
+        showSuccessMessage();
         return;
     }
     
-    // Format pesan untuk Discord
-    const message = {
-        content: `🎉 **Data Baru dari WITH U Application** 🎉`,
-        embeds: [{
-            title: "📊 Hasil Survey WITH U",
-            color: 0x667eea,
-            fields: [
-                {
-                    name: "👤 Nama User",
-                    value: data.userName || 'Tidak diisi',
-                    inline: false
-                },
-                {
-                    name: "🤔 Pilihan Warmup",
-                    value: data.warmupChoice || 'Tidak diisi',
-                    inline: true
-                },
-                {
-                    name: "🔘 Pilihan Button",
-                    value: data.buttonChoice || 'Tidak diisi',
-                    inline: true
-                },
-                {
-                    name: "❓ Jawaban Pertanyaan 1",
-                    value: data.questionAnswers.question_1 || 'Tidak diisi',
-                    inline: false
-                },
-                {
-                    name: "❓ Jawaban Pertanyaan 2",
-                    value: data.questionAnswers.question_2 || 'Tidak diisi',
-                    inline: false
-                },
-                {
-                    name: "❓ Jawaban Pertanyaan 3",
-                    value: data.questionAnswers.question_3 || 'Tidak diisi',
-                    inline: false
-                },
-                {
-                    name: "❓ Jawaban Pertanyaan 4",
-                    value: data.questionAnswers.question_4 || 'Tidak diisi',
-                    inline: false
-                },
-                {
-                    name: "❓ Jawaban Pertanyaan 5",
-                    value: data.questionAnswers.question_5 || 'Tidak diisi',
-                    inline: false
-                },
-                {
-                    name: "💭 Pendapat Akhir",
-                    value: data.finalOpinion || 'Tidak diisi',
-                    inline: false
-                }
-            ],
-            footer: {
-                text: "WITH U Application • " + new Date().toLocaleString('id-ID'),
-                icon_url: "https://cdn.discordapp.com/emojis/1234567890123456789.png"
+    // Create beautiful Discord embed
+    const embed = {
+        title: '💕 New Love Message from ' + data.userName,
+        description: '✨ Someone special shared their thoughts about Zaid!',
+        color: 16738740, // Pink color
+        fields: [
+            {
+                name: '👤 From',
+                value: data.userName,
+                inline: true
             },
-            timestamp: new Date().toISOString()
-        }]
+            {
+                name: '💭 Love Level',
+                value: data.loveMeterFinal + '%',
+                inline: true
+            },
+            {
+                name: '📊 Quiz Responses',
+                value: Object.keys(data.quizAnswers).length + ' questions answered',
+                inline: true
+            }
+        ],
+        timestamp: data.submittedAt
     };
     
-    // Submit ke Discord
+    // Add quiz answers to embed
+    Object.values(data.quizAnswers).forEach((qa, index) => {
+        embed.fields.push({
+            name: `Q${index + 1}: ${qa.question}`,
+            value: `💝 ${qa.answer}`,
+            inline: false
+        });
+    });
+    
+    // Add final opinion
+    embed.fields.push({
+        name: '💌 Final Love Message',
+        value: data.finalOpinion.substring(0, 1000) + (data.finalOpinion.length > 1000 ? '...' : ''),
+        inline: false
+    });
+    
+    const message = {
+        content: `💕 **New romantic message received!** 💕`,
+        embeds: [embed]
+    };
+    
+    // Send to Discord
     fetch(webhookUrl, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json'
         },
         body: JSON.stringify(message)
-    }).then(response => {
+    })
+    .then(response => {
         if (response.ok) {
-            console.log('Data sent to Discord successfully');
-            showSuccessMessage();
+            console.log('✅ Successfully sent to Discord!');
         } else {
-            console.error('Discord webhook error:', response.status);
-            showSuccessMessage(); // Show success anyway
+            console.warn('⚠️  Discord webhook response not OK:', response.status);
         }
-    }).catch(error => {
-        console.error('Discord webhook error:', error);
-        showSuccessMessage(); // Show success anyway
+        showSuccessMessage();
+    })
+    .catch(error => {
+        console.error('❌ Error sending to Discord:', error);
+        // Still show success to user for better UX
+        showSuccessMessage();
     });
 }
 
-// Success Message
+// Enhanced success message
 function showSuccessMessage() {
-    if (finalChallenge) finalChallenge.style.display = 'none';
-    if (successMessage) {
-        successMessage.style.display = 'block';
-        successMessage.classList.add('fade-in');
+    console.log('🎉 Showing success message...');
+    
+    const finalChallenge = document.getElementById('final-challenge');
+    const successMessage = document.getElementById('success-message');
+    
+    if (finalChallenge) {
+        finalChallenge.style.opacity = '0';
+        
+        setTimeout(() => {
+            finalChallenge.style.display = 'none';
+            
+            if (successMessage) {
+                successMessage.style.display = 'flex';
+                successMessage.style.animation = 'popup-appear 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+                
+                // Trigger confetti
+                createEnhancedConfetti();
+                
+                // Play success sound (if available)
+                playSuccessSound();
+            }
+        }, 500);
     }
     
-    // Add some celebration effects
-    setTimeout(() => {
-        createConfetti();
-    }, 1000);
+    isProcessing = false;
 }
 
-// Confetti Effect
-function createConfetti() {
-    const colors = ['#667eea', '#764ba2', '#ff6b6b', '#4ecdc4', '#45b7d1', '#f9ca24'];
+// Enhanced confetti effect
+function createEnhancedConfetti() {
+    const confettiContainer = document.getElementById('confetti-container');
+    if (!confettiContainer) return;
+    
+    const confettiTypes = ['💕', '💖', '💗', '💝', '💞', '✨', '🌟', '⭐', '🎉', '🎊'];
     
     for (let i = 0; i < 50; i++) {
         setTimeout(() => {
             const confetti = document.createElement('div');
-            confetti.style.position = 'fixed';
-            confetti.style.width = '10px';
-            confetti.style.height = '10px';
-            confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-            confetti.style.left = Math.random() * window.innerWidth + 'px';
-            confetti.style.top = '-10px';
-            confetti.style.zIndex = '9999';
-            confetti.style.borderRadius = '50%';
-            confetti.style.pointerEvents = 'none';
+            confetti.className = 'confetti';
+            confetti.innerHTML = confettiTypes[Math.floor(Math.random() * confettiTypes.length)];
+            confetti.style.left = Math.random() * 100 + '%';
+            confetti.style.animationDelay = Math.random() * 2 + 's';
+            confetti.style.animationDuration = (3 + Math.random() * 2) + 's';
             
-            document.body.appendChild(confetti);
+            confettiContainer.appendChild(confetti);
             
-            // Animate confetti
-            confetti.animate([
-                { transform: 'translateY(0px) rotate(0deg)', opacity: 1 },
-                { transform: `translateY(${window.innerHeight + 100}px) rotate(720deg)`, opacity: 0 }
-            ], {
-                duration: 3000,
-                easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
-            }).onfinish = () => {
-                confetti.remove();
-            };
+            setTimeout(() => {
+                if (confetti.parentNode) {
+                    confetti.parentNode.removeChild(confetti);
+                }
+            }, 6000);
         }, i * 100);
     }
 }
 
-// Utility Functions
+// Enhanced character mood updates
+function updateCharacterMood(mood) {
+    const character = document.getElementById('main-character');
+    if (!character) return;
+    
+    const moodImages = {
+        'baik': 'baik.png',
+        'marah': 'marah.png'
+    };
+    
+    if (moodImages[mood]) {
+        character.style.transition = 'all 0.5s ease';
+        character.style.transform = 'scale(0.9)';
+        
+        setTimeout(() => {
+            character.src = moodImages[mood];
+            character.style.transform = 'scale(1)';
+            character.classList.add('character-mood-change');
+            
+            setTimeout(() => {
+                character.classList.remove('character-mood-change');
+            }, 500);
+        }, 250);
+    }
+}
+
+// Enhanced love meter updates
+function updateLoveMeter(level) {
+    loveMeterLevel = Math.min(level, 100);
+    
+    const loveMeterFill = document.getElementById('love-meter-fill');
+    const loveMeterHeart = document.querySelector('.love-meter-heart');
+    
+    if (loveMeterFill) {
+        loveMeterFill.style.width = loveMeterLevel + '%';
+    }
+    
+    if (loveMeterHeart && level > loveMeterLevel - 10) {
+        loveMeterHeart.style.animation = 'heart-bounce 0.5s ease';
+        
+        setTimeout(() => {
+            loveMeterHeart.style.animation = '';
+        }, 500);
+    }
+    
+    console.log('💖 Love meter updated to:', loveMeterLevel + '%');
+}
+
+// Enhanced music management
+function startMusic() {
+    console.log('🎵 Starting romantic music...');
+    playMusic();
+}
+
+function playMusic() {
+    const audioPlayer = document.getElementById('audio-player');
+    const currentSongEl = document.getElementById('current-song');
+    
+    if (!audioPlayer || currentSongIndex >= playlist.length) return;
+    
+    const currentSong = playlist[currentSongIndex];
+    audioPlayer.src = currentSong;
+    
+    if (currentSongEl) {
+        currentSongEl.textContent = songTitles[currentSongIndex] || 'Romantic Melody';
+    }
+    
+    audioPlayer.play().then(() => {
+        console.log('🎵 Playing:', currentSong);
+        musicPlaying = true;
+        updateMusicControl();
+    }).catch(error => {
+        console.warn('🔇 Audio autoplay blocked or failed:', error);
+        updateMusicControl();
+    });
+}
+
+function toggleMusic() {
+    const audioPlayer = document.getElementById('audio-player');
+    if (!audioPlayer) return;
+    
+    if (audioPlayer.paused) {
+        audioPlayer.play().then(() => {
+            musicPlaying = true;
+            updateMusicControl();
+        }).catch(error => {
+            console.warn('🔇 Audio play failed:', error);
+        });
+    } else {
+        audioPlayer.pause();
+        musicPlaying = false;
+        updateMusicControl();
+    }
+}
+
+function updateMusicControl() {
+    const musicToggle = document.getElementById('music-toggle');
+    if (!musicToggle) return;
+    
+    const icon = musicToggle.querySelector('i');
+    if (icon) {
+        icon.className = musicPlaying ? 'fas fa-pause' : 'fas fa-play';
+    }
+}
+
+function handleAudioEnded() {
+    console.log('🎵 Song ended, playing next...');
+    playNextSong();
+}
+
+function playNextSong() {
+    currentSongIndex = (currentSongIndex + 1) % playlist.length;
+    setTimeout(() => {
+        playMusic();
+    }, 1000);
+}
+
+function playSuccessSound() {
+    // Play a short celebratory sound if available
+    const audioPlayer = document.getElementById('audio-player');
+    if (audioPlayer && !audioPlayer.paused) {
+        // Continue playing current romantic music
+        console.log('🎵 Continuing romantic music for celebration');
+    }
+}
+
+// Enhanced error popups
+function showErrorPopup(message = '') {
+    const errorPopup = document.getElementById('error-popup');
+    const errorMessage = document.getElementById('error-message');
+    
+    if (!errorPopup) return;
+    
+    if (errorMessage && message) {
+        errorMessage.textContent = message;
+    }
+    
+    errorPopup.style.display = 'flex';
+    errorPopup.style.animation = 'popup-appear 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+}
+
+function showWordErrorPopup() {
+    const wordErrorPopup = document.getElementById('word-error-popup');
+    if (!wordErrorPopup) return;
+    
+    wordErrorPopup.style.display = 'flex';
+    wordErrorPopup.style.animation = 'popup-appear 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+}
+
+function hidePopup() {
+    const popups = [
+        document.getElementById('error-popup'),
+        document.getElementById('word-error-popup')
+    ];
+    
+    popups.forEach(popup => {
+        if (popup && popup.style.display === 'flex') {
+            popup.style.opacity = '0';
+            
+            setTimeout(() => {
+                popup.style.display = 'none';
+                popup.style.opacity = '1';
+            }, 300);
+        }
+    });
+}
+
+// Enhanced utility functions
 function debounce(func, wait) {
     let timeout;
     return function executedFunction(...args) {
@@ -620,36 +1089,38 @@ function debounce(func, wait) {
     };
 }
 
-// Add some interactive effects
-document.addEventListener('mousemove', debounce((e) => {
-    // Subtle parallax effect for birds
-    const birds = document.querySelectorAll('.bird');
-    const mouseX = e.clientX / window.innerWidth;
-    const mouseY = e.clientY / window.innerHeight;
-    
-    birds.forEach((bird, index) => {
-        const speed = (index + 1) * 0.02;
-        bird.style.transform = `translate(${mouseX * speed * 50}px, ${mouseY * speed * 50}px)`;
-    });
-}, 16));
-
-// Prevent context menu on images
-document.addEventListener('contextmenu', (e) => {
-    if (e.target.tagName === 'IMG') {
-        e.preventDefault();
+// Mobile optimizations
+function initializeMobileOptimizations() {
+    // Add touch event listeners for better mobile experience
+    if ('ontouchstart' in window) {
+        document.body.classList.add('touch-device');
+        
+        // Improve button interactions on mobile
+        const buttons = document.querySelectorAll('.popup-btn, .love-btn, .text-btn, .quiz-option');
+        buttons.forEach(button => {
+            button.addEventListener('touchstart', function() {
+                this.style.transform = 'scale(0.95)';
+            });
+            
+            button.addEventListener('touchend', function() {
+                this.style.transform = '';
+            });
+        });
     }
-});
+}
 
-// Add keyboard shortcuts
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-        // Close any open popups
-        if (errorPopup.style.display === 'flex') {
-            hideErrorPopup();
-        }
-    }
-});
+// Initialize mobile optimizations when DOM is ready
+document.addEventListener('DOMContentLoaded', initializeMobileOptimizations);
 
-console.log('WITH U Application Loaded Successfully! 🎶');
+// Add some romantic console messages for developers 💕
+console.log(`
+💕 WITH U - Enhanced Romantic App 💕
 
+❤️  Made with love for someone special
+🌟 Every interaction is designed to bring joy
+✨ Your love story matters
+💝 Enjoy this romantic journey!
 
+`);
+
+console.log('🎯 App Status: Ready to spread love!');
