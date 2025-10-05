@@ -726,26 +726,24 @@ body {
 }
 
 /* Final Challenge */
-.final-challenge {
-    width: 100%;
-    max-width: 600px;
-    margin: 0 auto;
+.final-challenge-header-inline {
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(0, 78, 146, 0.1);
+    text-align: center;
 }
 
-.final-challenge h3 {
-    color: #333;
-    margin-bottom: 1rem;
-    font-size: 1.5rem;
-    text-align: center;
-    font-weight: 700;
+.final-challenge-header-inline h2 {
+    color: #004e92;
+    font-size: 1.8em;
+    margin-bottom: 5px;
 }
 
-.final-challenge p {
-    color: #666;
-    margin-bottom: 1.5rem;
-    text-align: center;
-    font-size: 1.1rem;
+.final-challenge-header-inline p {
+    color: #4a90e2;
+    font-size: 1em;
 }
+
 
 .textarea-container {
     margin-bottom: 1.5rem;
