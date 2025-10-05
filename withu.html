@@ -126,19 +126,26 @@
             </div>
         </div>
 
-        <div class="popup-overlay" id="final-challenge" style="display: none;">
-            <div class="popup-content main-popup">
-                <div class="popup-body">
-                    
-                    <label for="opinion-textarea">Tulis opini/kesan jujurmu tentang Zaid (Min. 50 kata):</label>
-                    <textarea id="opinion-textarea" placeholder="Tulis disini..."></textarea>
-                    <p class="word-count-info">Jumlah kata: <span id="word-count">0</span> / 50</p>
-                    <button type="submit" class="popup-btn main-btn" id="submit-final">
-                        <i class="fas fa-paper-plane"></i> Kirim Pesan ke Pulau Rahasia
-                    </button>
-                </div>
-            </div>
+      <div class="popup-content final-challenge-content">
+    
+    <div class="challenge-header-tabs">
+        <h2 id="challengeTitle">Tantangan Terakhir</h2>
+    </div>
+
+    <div class="challenge-body-card">
+        <p class="challenge-instruction">silahkan isi pendapat anda tentang zaid</p>
+        
+        <textarea id="opinionInput" rows="8" placeholder="Tuliskan pendapat Anda di sini..."></textarea>
+        
+        <div id="wordCountDisplay" class="word-counter">
+            0 kata (Minimum: 50 kata)
         </div>
+        
+        <button id="finalSubmitBtn" class="popup-btn submit-challenge-btn">
+            SELESAI
+        </button>
+    </div>
+</div>
 
         <div id="success-message" class="success-message" style="display: none;">
             <div class="text-container">
@@ -163,3 +170,4 @@
     <script src="withu-script.js"></script>
 </body>
 </html>
+
