@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WITH U - Web Seru-Seruan</title>
+    <link rel="stylesheet" href="withu-style.css">
+    <link href='https://fonts.googleapis.com/css?family=Poppins:wght@300;400;500;600;700&display=swap' rel='stylesheet'>
+</head>
+<body>
+    <!-- Background Ocean dengan efek ombak -->
+    <div id="ocean-background">
+        <div class="wave wave1"></div>
+        <div class="wave wave2"></div>
+        <div class="wave wave3"></div>
+        <div class="wave wave4"></div>
+        <div class="wave wave5"></div>
+    </div>
+
+    <!-- Animasi burung terbang -->
+    <div id="birds-container">
+        <div class="bird bird1">🐦</div>
+        <div class="bird bird2">🐦</div>
+        <div class="bird bird3">🐦</div>
+    </div>
+
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="loading-content">
+            <h2>WITH U</h2>
+            <div class="loading-spinner"></div>
+            <p>Memuat pengalaman seru...</p>
+        </div>
+    </div>
+
+    <!-- Pop-up Tahap 1: Input Nama -->
+    <div id="name-popup" class="popup-overlay">
+        <div class="popup-content">
+            <div class="popup-header">
+                <h3>Masukkan nama kamu</h3>
+            </div>
+            <div class="popup-body">
+                <form id="name-form">
+                    <input type="text" id="user-name" placeholder="Nama kamu" required>
+                    <button type="submit" id="start-button">Mulai</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pop-up Tahap 2: Pemanasan Awal -->
+    <div id="warmup-popup" class="popup-overlay" style="display: none;">
+        <div class="popup-content">
+            <div class="popup-header">
+                <h3 id="warmup-text">apakah kamu ingin melanjutkan program ini?</h3>
+            </div>
+            <div class="popup-body">
+                <div class="button-group">
+                    <button id="yes-btn-1" class="popup-btn">iya</button>
+                    <button id="no-btn" class="popup-btn">tidak</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pop-up Error -->
+    <div id="error-popup" class="popup-overlay" style="display: none;">
+        <div class="popup-content error-popup">
+            <div class="popup-header">
+                <h3>Anda tidak boleh memilih ini wleee</h3>
+            </div>
+            <div class="popup-body">
+                <button id="error-ok-btn" class="popup-btn">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pop-up Word Count Error -->
+    <div id="word-error-popup" class="popup-overlay" style="display: none;">
+        <div class="word-error-popup">
+            <div class="popup-header">
+                <h3>⚠️ Pendapat Terlalu Singkat</h3>
+            </div>
+            <div class="popup-body">
+<p>Pendapat harus lebih dari 50 kata untuk dapat melanjutkan. Silakan tambahkan lebih banyak detail dan penjelasan tentang Zaid.</p>
+                <button id="word-error-ok-btn" class="popup-btn">MENGERTI</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div id="main-content" class="main-content" style="display: none;">
+        <!-- Karakter Utama -->
+        <div class="character-container">
+            <img id="main-character" src="baik.png" alt="Karakter Utama" class="main-character">
+<div class="about-text">ABOUT YOU</div>
+        </div>
+
+        <!-- Kotak Putih untuk Teks -->
+        <div class="text-container">
+            <div id="text-box" class="text-box">
+                <div id="main-text" class="main-text"></div>
+                <div id="text-buttons" class="text-buttons" style="display: none;">
+                    <button id="yes-btn-2" class="text-btn">iyahh makasih</button>
+                    <button id="no-btn-2" class="text-btn">y,makasih</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sesi Pertanyaan - Quiz Style -->
+        <div id="quiz-popup" class="quiz-popup" style="display: none;">
+            <div class="quiz-container">
+                <div class="quiz-header">
+                    <h2 class="quiz-title">Quiz Sesi Pertanyaan</h2>
+                    <p class="quiz-subtitle">hai selamat malam tuan <span id="user-name-display"></span>, sebelum anda meninggalkan program inih, silahkan jawab pertanyaan ini dengan jujur.</p>
+    </div>
+
+            <div class="quiz-progress">
+            <div class="progress-info">
+                        <span id="current-question-num">1</span> dari <span id="total-questions">5</span>
+        </div>
+<div class="progress-bar">
+                        <div class="progress-fill" id="progress-fill" style="width: 20%"></div>
+    </div>
+<div class="progress-info">
+                <span id="progress-percentage">20%</span>
+            </div>
+                    </div>
+
+                <div class="quiz-question">
+            <div class="question-text" id="quiz-question-text">
+                        <!-- Pertanyaan akan dimuat di sini -->
+        </div>
+
+        <div class="quiz-options" id="quiz-options">
+                        <!-- Opsi jawaban akan dimuat di sini -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tantangan Terakhir -->
+        <div id="final-challenge" class="final-challenge" style="display: none;">
+            <div class="text-container">
+                <div class="text-box">
+                    <h3>Tantangan Terakhir</h3>
+                    <p>silahkan isi pendapat anda tentang zaid</p>
+<div class="textarea-container">
+                    <textarea id="opinion-textarea" placeholder="Tuliskan pendapat Anda di sini..." rows="8"></textarea>
+                    <div class="word-count">
+                            <span id="word-count">0</span> kata (Minimum: 50 kata)
+        </div>
+                    </div>
+                                    <button id="submit-final" class="submit-btn">SELESAI</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Success Message -->
+        <div id="success-message" class="success-message" style="display: none;">
+            <div class="text-container">
+                <div class="text-box success-box">
+                    <h3>🎉 Terima Kasih! 🎉</h3>
+                    <p>Semoga kita semua bisa selalu memiliki semangat dan niat yang membara 🔥 untuk mencoba hal-hal baru dan mempelajari apa pun yang belum kita ketahui.
+
+                        Ingatlah, setiap usaha (effort) dan langkah kecil yang kita ambil—sekalipun terlihat sulit bagi pemula—adalah sebuah kemajuan yang luar biasa 🚀. Jangan pernah takut untuk memulai dan mencoba, karena keberanian untuk belajar itulah yang membuat kita satu langkah lebih maju dari sebelumnya.
+                        
+                        Dan yang terpenting, semoga kita selalu bisa menghargai waktu indah ("WITH U" 🥰) dan apresiasi tulus terhadap kerja keras orang lain, karena pengakuan itu adalah motivasi terbesar! 💪!</p>
+                    <div class="success-animation">✨</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Audio Player (Hidden) -->
+    <audio id="audio-player" preload="auto">
+        <source src="1005.MP3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <script src="withu-script.js"></script>
+</body>
+</html>
