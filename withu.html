@@ -3,12 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WITH U - Web Seru-Seruan</title>
-    <link rel="stylesheet" href="withu-style.css">
-    <link href='https://fonts.googleapis.com/css?family=Poppins:wght@300;400;500;600;700&display=swap' rel='stylesheet'>
+    <title>WITH U - Love Story 💕</title>
+    <link rel="stylesheet" href="style.css">
+    <link href='https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Dancing+Script:wght@400;500;600;700&family=Satisfy&display=swap' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <meta name="theme-color" content="#ff6b9d">
 </head>
 <body>
-    <!-- Background Ocean dengan efek ombak -->
+    <!-- Floating Hearts Background -->
+    <div id="hearts-container"></div>
+    
+    <!-- Starry Night Background -->
+    <div id="stars-container"></div>
+    
+    <!-- Background Ocean dengan efek ombak yang lebih romantic -->
     <div id="ocean-background">
         <div class="wave wave1"></div>
         <div class="wave wave2"></div>
@@ -16,341 +24,227 @@
         <div class="wave wave4"></div>
         <div class="wave wave5"></div>
     </div>
-
-    <!-- Animasi burung terbang -->
+    
+    <!-- Animasi burung terbang dengan romantic touch -->
     <div id="birds-container">
-        <div class="bird bird1">🐦</div>
-        <div class="bird bird2">🐦</div>
-        <div class="bird bird3">🐦</div>
+        <div class="bird" style="top: 15%; animation-delay: 0s;">💕</div>
+        <div class="bird" style="top: 25%; animation-delay: 2s;">💖</div>
+        <div class="bird" style="top: 35%; animation-delay: 4s;">✨</div>
+        <div class="bird" style="top: 45%; animation-delay: 6s;">💫</div>
     </div>
-
-    <!-- Loading Screen -->
-    <div id="loading-screen" class="loading-screen">
-        <div class="loading-content">
-            <h2>WITH U</h2>
-            <div class="loading-spinner"></div>
-            <p>Memuat pengalaman seru...</p>
+    
+    <!-- Enhanced Loading Screen -->
+    <div class="popup-overlay loading-screen" id="loading-screen">
+        <div class="loading-container">
+            <div class="love-spinner">
+                <div class="heart-beat">💖</div>
+            </div>
+            <h2 class="loading-title">Preparing Something Special...</h2>
+            <p class="loading-subtitle">Untuk seseorang yang istimewa 💕</p>
+            <div class="loading-progress">
+                <div class="progress-bar" id="loading-progress-bar"></div>
+            </div>
         </div>
     </div>
-
-    <!-- Pop-up Tahap 1: Input Nama -->
-    <div id="name-popup" class="popup-overlay">
-        <div class="popup-content">
+    
+    <!-- Enhanced Name Popup -->
+    <div class="popup-overlay" id="name-popup" style="display: none;">
+        <div class="popup-content love-popup">
             <div class="popup-header">
-                <h3>Masukkan nama kamu</h3>
+                <h2>✨ Halo Beautiful Soul ✨</h2>
+                <p>Sebelum kita memulai perjalanan indah ini...</p>
             </div>
             <div class="popup-body">
                 <form id="name-form">
-                    <input type="text" id="user-name" placeholder="Nama kamu" required>
-                    <button type="submit" id="start-button">Mulai</button>
+                    <label for="user-name">Siapa nama mu yang cantik itu? 💕</label>
+                    <input type="text" id="user-name" placeholder="Tulis nama indahmu disini..." required>
+                    <button type="submit" class="popup-btn love-btn">
+                        <i class="fas fa-heart"></i>
+                        Lanjutkan Cerita Kita
+                        <i class="fas fa-heart"></i>
+                    </button>
                 </form>
             </div>
         </div>
     </div>
-
-    <!-- Pop-up Tahap 2: Pemanasan Awal -->
-    <div id="warmup-popup" class="popup-overlay" style="display: none;">
-        <div class="popup-content">
+    
+    <!-- Enhanced Warmup Popup -->
+    <div class="popup-overlay" id="warmup-popup" style="display: none;">
+        <div class="popup-content love-popup">
             <div class="popup-header">
-                <h3 id="warmup-text">apakah kamu ingin melanjutkan program ini?</h3>
+                <h2 id="warmup-title">💖 Hey <span id="name-display"></span>! 💖</h2>
             </div>
             <div class="popup-body">
-                <div class="button-group">
-                    <button id="yes-btn-1" class="popup-btn">iya</button>
-                    <button id="no-btn" class="popup-btn">tidak</button>
+                <p id="warmup-text">Mau ikutan sesuatu yang seru dan romantic? Ada hadiah spesial diakhir lho... 🎁✨</p>
+                <div class="warmup-buttons">
+                    <button class="popup-btn love-btn" id="warmup-yes">
+                        <i class="fas fa-heart-eyes"></i> Tentu saja! 💕
+                    </button>
+                    <button class="popup-btn danger-btn" id="warmup-no">
+                        <i class="fas fa-heartbreak"></i> Tidak mau...
+                    </button>
                 </div>
             </div>
         </div>
     </div>
-
-    <!-- Pop-up Error -->
-    <div id="error-popup" class="popup-overlay" style="display: none;">
+    
+    <!-- Enhanced Error Popups -->
+    <div class="popup-overlay" id="error-popup" style="display: none;">
         <div class="popup-content error-popup">
-            <div class="popup-header">
-                <h3>anda tidak boleh memilih ini wleee</h3>
-            </div>
-            <div class="popup-body">
-                <button id="error-ok-btn" class="popup-btn">OK</button>
-            </div>
+            <div class="error-icon">💔</div>
+            <h3>Aww... That's Sad 😢</h3>
+            <p id="error-message">Tapi aku yakin kamu pasti mau kan? Come on... just for me? 🥺💕</p>
+            <button class="popup-btn love-btn" id="close-error">
+                <i class="fas fa-heart"></i> Okay, I'll Try Again
+            </button>
         </div>
     </div>
-
-    <!-- Pop-up Word Count Error -->
-    <div id="word-error-popup" class="popup-overlay" style="display: none;">
-        <div class="word-error-popup">
-            <div class="popup-header">
-                <h3>⚠️ Pendapat Terlalu Singkat</h3>
-            </div>
-            <div class="popup-body">
-                <p>Pendapat harus lebih dari 1000 kata untuk dapat melanjutkan. Silakan tambahkan lebih banyak detail dan penjelasan tentang Zaid.</p>
-                <button id="word-error-ok-btn" class="popup-btn">MENGERTI</button>
-            </div>
+    
+    <div class="popup-overlay" id="word-error-popup" style="display: none;">
+        <div class="popup-content error-popup">
+            <div class="error-icon">📝</div>
+            <h3>Need More Love Words! 💕</h3>
+            <p>Ceritakan lebih banyak dong... minimal 50 kata ya sayang! 😊</p>
+            <button class="popup-btn love-btn" id="close-word-error">
+                <i class="fas fa-pencil-alt"></i> Oke, Aku Tulis Lebih Banyak
+            </button>
         </div>
     </div>
-
-    <!-- Main Content -->
-    <div id="main-content" class="main-content" style="display: none;">
-        <!-- Karakter Utama -->
+    
+    <!-- Main Content with Enhanced Design -->
+    <div id="main-content" style="display: none;">
+        <!-- Love Meter -->
+        <div class="love-meter">
+            <div class="love-meter-label">Love Level</div>
+            <div class="love-meter-bar">
+                <div class="love-meter-fill" id="love-meter-fill"></div>
+                <div class="love-meter-heart">💖</div>
+            </div>
+        </div>
+        
+        <!-- Enhanced Character Container -->
         <div class="character-container">
+            <div class="character-glow"></div>
             <img id="main-character" src="baik.png" alt="Karakter Utama" class="main-character">
+            <div class="character-name">Zaid 💕</div>
         </div>
-
-        <!-- Kotak Putih untuk Teks -->
+        
+        <!-- Enhanced Text Container -->
         <div class="text-container">
-            <div id="text-box" class="text-box">
-                <div id="main-text" class="main-text"></div>
-                <div id="text-buttons" class="text-buttons" style="display: none;">
-                    <button id="yes-btn-2" class="text-btn">iyahh makasih</button>
-                    <button id="no-btn-2" class="text-btn">y,makasih</button>
-                </div>
+            <div class="text-box">
+                <div class="text-decoration">✨</div>
+                <div class="main-text" id="main-text"></div>
+                <div class="text-decoration">✨</div>
+            </div>
+            
+            <div class="text-buttons" id="text-buttons" style="display: none;">
+                <button class="text-btn love-btn" id="text-yes">
+                    <i class="fas fa-heart"></i> Iya dong! 💕
+                </button>
+                <button class="text-btn danger-btn" id="text-no">
+                    <i class="fas fa-times"></i> Enggak deh...
+                </button>
             </div>
         </div>
-
-        <!-- Sesi Pertanyaan - Quiz Style -->
-        <div id="quiz-popup" class="quiz-popup" style="display: none;">
-            <div class="quiz-container">
-                <div class="quiz-header">
-                    <h2 class="quiz-title">Quiz Sesi Pertanyaan</h2>
-                    <p class="quiz-subtitle">hai selamat malam tuan <span id="user-name-display"></span>, sebelum anda meninggalkan program inih, silahkan jawab pertanyaan ini dengan jujur.</p>
+        
+        <!-- Enhanced Quiz Section -->
+        <div class="quiz-popup" id="quiz-popup" style="display: none;">
+            <div class="quiz-header">
+                <h2>💝 Special Quiz for <span id="user-name-display"></span> 💝</h2>
+                <div class="quiz-progress-container">
+                    <div class="quiz-progress-bar">
+                        <div class="quiz-progress-fill" id="quiz-progress-fill" style="width: 0%"></div>
+                    </div>
+                    <div class="quiz-progress-text" id="quiz-progress-text">0/0</div>
+                </div>
+            </div>
+            
+            <div class="quiz-content">
+                <div class="quiz-question-container">
+                    <div class="question-number" id="question-number">Question 1</div>
+                    <h3 class="quiz-question" id="quiz-question-text">Loading question...</h3>
                 </div>
                 
-                <div class="quiz-progress">
-                    <div class="progress-info">
-                        <span id="current-question-num">1</span> dari <span id="total-questions">5</span>
-                    </div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="progress-fill" style="width: 20%"></div>
-                    </div>
-                    <div class="progress-info">
-                        <span id="progress-percentage">20%</span>
+                <div class="quiz-options" id="quiz-options">
+                    <!-- Options will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+        
+        <!-- Enhanced Final Challenge -->
+        <div class="final-challenge" id="final-challenge" style="display: none;">
+            <div class="final-header">
+                <h2>💖 Last Step, Beautiful! 💖</h2>
+                <p>Ceritakan pendapat jujurmu tentang Zaid...</p>
+            </div>
+            
+            <div class="final-content">
+                <div class="textarea-container">
+                    <label for="opinion-textarea">Your Heart's Words 💕</label>
+                    <textarea 
+                        id="opinion-textarea" 
+                        placeholder="Tulis pendapatmu tentang Zaid disini... ceritakan sejujur-jujurnya dari hatimu 💖 (minimal 50 kata ya sayang)"
+                        rows="6"
+                    ></textarea>
+                    <div class="word-counter">
+                        <span id="word-count">0</span> / 50 words
+                        <div class="word-count-hearts" id="word-count-hearts"></div>
                     </div>
                 </div>
                 
-                <div class="quiz-question">
-                    <div class="question-text" id="quiz-question-text">
-                        <!-- Pertanyaan akan dimuat di sini -->
-                    </div>
-                    
-                    <div class="quiz-options" id="quiz-options">
-                        <!-- Opsi jawaban akan dimuat di sini -->
-                    </div>
-                </div>
+                <button class="submit-btn love-btn" id="submit-final">
+                    <i class="fas fa-paper-plane"></i>
+                    Send My Love Letter
+                    <i class="fas fa-heart"></i>
+                </button>
             </div>
         </div>
-
-        <!-- Tantangan Terakhir -->
-        <div id="final-challenge" class="final-challenge" style="display: none;">
-            <div class="text-container">
-                <div class="text-box">
-                    <h3>Tantangan Terakhir</h3>
-                    <p>silahkan isi pendapat anda tentang zaid</p>
-                    <div class="textarea-container">
-                        <textarea id="opinion-textarea" placeholder="Tuliskan pendapat Anda di sini..." rows="8"></textarea>
-                        <div class="word-count">
-                            <span id="word-count">0</span> kata (Minimum: 50 kata)
-                        </div>
-                    </div>
-                    <button id="submit-final" class="submit-btn">SELESAI</button>
+        
+        <!-- Enhanced Success Message -->
+        <div class="success-message" id="success-message" style="display: none;">
+            <div class="success-animation">
+                <div class="success-hearts">
+                    <div class="floating-heart">💖</div>
+                    <div class="floating-heart">💕</div>
+                    <div class="floating-heart">💝</div>
+                    <div class="floating-heart">✨</div>
                 </div>
+                <div class="success-icon">🎉</div>
             </div>
-        </div>
-
-        <!-- Success Message -->
-        <div id="success-message" class="success-message" style="display: none;">
-            <div class="text-container">
-                <div class="text-box success-box">
-                    <h3>🎉 Terima Kasih! 🎉</h3>
-                    <p>Data Anda telah berhasil dikirim ke Google Forms. Terima kasih telah ikut serta dalam program "WITH U"!</p>
-                    <div class="success-animation">✨</div>
-                </div>
+            
+            <h2>Thank You My Love! 💕</h2>
+            <p>Pesanmu sudah terkirim dengan penuh cinta!</p>
+            <div class="success-details">
+                <p>✨ Data kamu telah berhasil dikirim ke Discord ✨</p>
+                <p>Zaid pasti akan senang banget membaca ini! 🥰</p>
             </div>
+            
+            <button class="popup-btn love-btn" onclick="location.reload()">
+                <i class="fas fa-redo"></i> Send Another Love Message
+            </button>
         </div>
     </div>
-
-    <!-- Audio Player (Hidden) -->
-    <audio id="audio-player" preload="auto">
+    
+    <!-- Enhanced Audio Player -->
+    <audio id="audio-player" preload="auto" style="display: none;">
         <source src="1005.MP3" type="audio/mpeg">
+        <source src="indah.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
-
-    <script src="withu-script.js"></script>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WITH U - Web Seru-Seruan</title>
-    <link rel="stylesheet" href="withu-style.css">
-    <link href='https://fonts.googleapis.com/css?family=Poppins:wght@300;400;500;600;700&display=swap' rel='stylesheet'>
-</head>
-<body>
-    <!-- Background Ocean dengan efek ombak -->
-    <div id="ocean-background">
-        <div class="wave wave1"></div>
-        <div class="wave wave2"></div>
-        <div class="wave wave3"></div>
-        <div class="wave wave4"></div>
-        <div class="wave wave5"></div>
-    </div>
-
-    <!-- Animasi burung terbang -->
-    <div id="birds-container">
-        <div class="bird bird1">🐦</div>
-        <div class="bird bird2">🐦</div>
-        <div class="bird bird3">🐦</div>
-    </div>
-
-    <!-- Loading Screen -->
-    <div id="loading-screen" class="loading-screen">
-        <div class="loading-content">
-            <h2>WITH U</h2>
-            <div class="loading-spinner"></div>
-            <p>Memuat pengalaman seru...</p>
+    
+    <!-- Music Control -->
+    <div class="music-control" id="music-control">
+        <button id="music-toggle" title="Toggle Music">
+            <i class="fas fa-music"></i>
+        </button>
+        <div class="music-info">
+            <div class="music-title" id="current-song">Romantic Melody</div>
         </div>
     </div>
-
-    <!-- Pop-up Tahap 1: Input Nama -->
-    <div id="name-popup" class="popup-overlay">
-        <div class="popup-content">
-            <div class="popup-header">
-                <h3>Masukkan nama kamu</h3>
-            </div>
-            <div class="popup-body">
-                <form id="name-form">
-                    <input type="text" id="user-name" placeholder="Nama kamu" required>
-                    <button type="submit" id="start-button">Mulai</button>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <!-- Pop-up Tahap 2: Pemanasan Awal -->
-    <div id="warmup-popup" class="popup-overlay" style="display: none;">
-        <div class="popup-content">
-            <div class="popup-header">
-                <h3 id="warmup-text">apakah kamu ingin melanjutkan program ini?</h3>
-            </div>
-            <div class="popup-body">
-                <div class="button-group">
-                    <button id="yes-btn-1" class="popup-btn">iya</button>
-                    <button id="no-btn" class="popup-btn">tidak</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Pop-up Error -->
-    <div id="error-popup" class="popup-overlay" style="display: none;">
-        <div class="popup-content error-popup">
-            <div class="popup-header">
-                <h3>anda tidak boleh memilih ini wleee</h3>
-            </div>
-            <div class="popup-body">
-                <button id="error-ok-btn" class="popup-btn">OK</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Pop-up Word Count Error -->
-    <div id="word-error-popup" class="popup-overlay" style="display: none;">
-        <div class="word-error-popup">
-            <div class="popup-header">
-                <h3>⚠️ Pendapat Terlalu Singkat</h3>
-            </div>
-            <div class="popup-body">
-                <p>Pendapat harus lebih dari 1000 kata untuk dapat melanjutkan. Silakan tambahkan lebih banyak detail dan penjelasan tentang Zaid.</p>
-                <button id="word-error-ok-btn" class="popup-btn">MENGERTI</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Main Content -->
-    <div id="main-content" class="main-content" style="display: none;">
-        <!-- Karakter Utama -->
-        <div class="character-container">
-            <img id="main-character" src="baik.png" alt="Karakter Utama" class="main-character">
-        </div>
-
-        <!-- Kotak Putih untuk Teks -->
-        <div class="text-container">
-            <div id="text-box" class="text-box">
-                <div id="main-text" class="main-text"></div>
-                <div id="text-buttons" class="text-buttons" style="display: none;">
-                    <button id="yes-btn-2" class="text-btn">iyahh makasih</button>
-                    <button id="no-btn-2" class="text-btn">y,makasih</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Sesi Pertanyaan - Quiz Style -->
-        <div id="quiz-popup" class="quiz-popup" style="display: none;">
-            <div class="quiz-container">
-                <div class="quiz-header">
-                    <h2 class="quiz-title">Quiz Sesi Pertanyaan</h2>
-                    <p class="quiz-subtitle">hai selamat malam tuan <span id="user-name-display"></span>, sebelum anda meninggalkan program inih, silahkan jawab pertanyaan ini dengan jujur.</p>
-                </div>
-                
-                <div class="quiz-progress">
-                    <div class="progress-info">
-                        <span id="current-question-num">1</span> dari <span id="total-questions">5</span>
-                    </div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="progress-fill" style="width: 20%"></div>
-                    </div>
-                    <div class="progress-info">
-                        <span id="progress-percentage">20%</span>
-                    </div>
-                </div>
-                
-                <div class="quiz-question">
-                    <div class="question-text" id="quiz-question-text">
-                        <!-- Pertanyaan akan dimuat di sini -->
-                    </div>
-                    
-                    <div class="quiz-options" id="quiz-options">
-                        <!-- Opsi jawaban akan dimuat di sini -->
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Tantangan Terakhir -->
-        <div id="final-challenge" class="final-challenge" style="display: none;">
-            <div class="text-container">
-                <div class="text-box">
-                    <h3>Tantangan Terakhir</h3>
-                    <p>silahkan isi pendapat anda tentang zaid</p>
-                    <div class="textarea-container">
-                        <textarea id="opinion-textarea" placeholder="Tuliskan pendapat Anda di sini..." rows="8"></textarea>
-                        <div class="word-count">
-                            <span id="word-count">0</span> kata (Minimum: 50 kata)
-                        </div>
-                    </div>
-                    <button id="submit-final" class="submit-btn">SELESAI</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Success Message -->
-        <div id="success-message" class="success-message" style="display: none;">
-            <div class="text-container">
-                <div class="text-box success-box">
-                    <h3>🎉 Terima Kasih! 🎉</h3>
-                    <p>Data Anda telah berhasil dikirim ke Google Forms. Terima kasih telah ikut serta dalam program "WITH U"!</p>
-                    <div class="success-animation">✨</div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Audio Player (Hidden) -->
-    <audio id="audio-player" preload="auto">
-        <source src="1005.MP3" type="audio/mpeg">
-        Your browser does not support the audio element.
-    </audio>
-
-    <script src="withu-script.js"></script>
+    
+    <!-- Confetti Container -->
+    <div id="confetti-container"></div>
+    
+    <script src="script.js"></script>
 </body>
 </html>
